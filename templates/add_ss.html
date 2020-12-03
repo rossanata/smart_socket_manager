@@ -1,0 +1,28 @@
+{% extends 'common/base.html' %}
+{% block site_content %}
+    {% load bootstrap4 %}
+    <div class="container-fluid m-2">
+        <div class="row">
+            <div class="col-lg-6">
+                <p class="display-4  pl-3 pt-1">
+                    Add smart socket.
+                </p>
+                <div class="pl-4 form-group form-control-sm w-50">
+                    <form method="POST" action="{% url 'add smart socket' %}">
+                        {% csrf_token %}
+                        {% for field in ss_form %}
+                            {% bootstrap_field field %}
+                        {% endfor %}
+                        {% buttons %}
+                            <button type="submit" class="btn btn-sm btn-light btn-outline-secondary">Add</button>
+                        {% endbuttons %}
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img src="../../static/images/energy-3036156_1920.jpg" alt="Smart Socket"
+                     class="w-100 p-3">
+            </div>
+        </div>
+    </div>
+{% endblock %}

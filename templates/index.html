@@ -1,22 +1,30 @@
-{%  extends 'common/base.html' %}
+{% extends 'common/base.html' %}
 {% block site_content %}
-<div>
-    <p class="w-50 p-3 float-left display-4">
-        Easy way to automate your home with smart sockets.
-    </p>
-</div>
-<div class="form">
-    <img src="../static/images/energy-3036156_1920.jpg" alt="Smart Socket"
-         class = "w-50 p-3 img-fluid.max-width:50% img-fluid rounded float-left">
-</div>
-
-{#<div class="float-right w-50">#}
-{#    <form class="float-right w-50 p-3 form-group row" method="POST" action="{% url 'home' %}">#}
-{#        {{ form }}#}
-{#        {% csrf_token %}#}
-{#      <button type="submit" class="btn btn-light">Sign in</button>#}
-{#        <a class="float-right w-25" href="{% url 'create profile' %}">Register</a>#}
-{#    </form>#}
-{#</div>#}
+    {% load bootstrap4 %}
+    {% if user.is_authenticated %}
+        {% if sockets %}
+            <div class="w-50 p-3 float-left ">
+                {% for socket in sockets %}
+                    {{ socket.name }}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="m-2">
+                <p class="w-50 p-3 float-left display-4">
+                    Add your smart sockets <a href="{% url 'add smart socket' %}" class="text-secondary">here</a>.
+                </p>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="m-2">
+            <p class="w-50 p-3 float-left display-4">
+                Easy way to automate your home with smart sockets.
+            </p>
+        </div>
+    {% endif %}
+    <div class="m-2">
+        <img src="../static/images/energy-3036156_1920.jpg" alt="Socket"
+             class="w-50 p-3 img-fluid.max-width:50% img-fluid rounded float-left">
+    </div>
 {% endblock %}
 

@@ -1,3 +1,12 @@
+from django.contrib.auth.models import User
 from django.db import models
 
-# Create your models here.
+
+class UserProfile(models.Model):
+    profile_image = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+
+class LogInUser(models.Model):
+    email = models.EmailField(max_length=40)
+    password = models.CharField(max_length=15)

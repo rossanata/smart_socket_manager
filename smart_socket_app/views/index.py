@@ -1,11 +1,13 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render
 
-from smart_socket_app.forms.login import LogInForm
-from smart_socket_app.models import LogInProfile
+from smart_socket_app.forms import SmartSocketForm
+from smart_socket_app.models import SmartSocket
+from ssm_auth.models import LogInUser
 
 
 def index(request):
-    if LogInProfile.objects.exists():
+    if LogInUser.objects.exists():
         # profile = Profile.objects.all()[0]
         # expenses = Expense.objects.all()
         # expenses_cost = sum(expense.price for expense in expenses)
@@ -15,9 +17,10 @@ def index(request):
         #     'expenses': expenses,
         # }
         # return render(request, 'home-with-profile.html', context)
-        return render(request, 'home.html')
+        return render(request, 'index.html')
     else:
         context = {
-            'form': LogInForm()
+            'sockets': SmartSocket.objects.all(),
+            'user': request.user,
         }
         return render(request, 'index.html', context)

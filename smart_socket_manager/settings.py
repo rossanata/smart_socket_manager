@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'smart_socket_app',
     'ssm_auth',
+    'phonenumber_field',
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [
