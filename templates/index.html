@@ -1,11 +1,26 @@
 {% extends 'common/base.html' %}
 {% block site_content %}
+    <script src="https://kit.fontawesome.com/c2c6b51692.js" crossorigin="anonymous"></script>
     {% load bootstrap4 %}
     {% if user.is_authenticated %}
-        {% if sockets %}
+        {% if owner_sockets %}
             <div class="w-50 p-3 float-left ">
-                {% for socket in sockets %}
-                    {{ socket.name }}
+                {% for socket in owner_sockets %}
+                    <ul style=" list-style: none;">
+                        <li>
+                            <i class="fas fa-plug mr-1 text-dark"></i>
+                            <a href="{% url 'ss description' socket.id %}" class="text-dark">
+                                {{ socket.name }}</a>
+                            {% buttons %}
+                                <a href="{% url 'cmd' socket.name 'on' %}"
+                                class="btn btn-sm btn-light btn-outline-secondary ml-4"
+                                        class="text-dark">On</a>
+                                <a href="{% url 'cmd' socket.name 'off' %}"
+                                class="btn btn-sm btn-light btn-outline-secondary"
+                                        class="text-dark">Off</a>
+                            {% endbuttons %}
+                        </li>
+                    </ul>
                 {% endfor %}
             </div>
         {% else %}

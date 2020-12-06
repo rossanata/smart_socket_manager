@@ -1,0 +1,40 @@
+{% extends 'common/base.html' %}
+{% block site_content %}
+    {% load bootstrap4 %}
+    {% if user.is_authenticated %}
+        {#        <p class="w-50 p-3 float-left display-4">#}
+        {#            Here stands the description.#}
+        {#        </p>#}
+
+        {#        <p class="float-left pl-4 form-group form-control-sm w-50">#}
+        {#            Name: <br>#}
+        {#            {{ smart_socket.name }} <br>#}
+        {#            Description <br>#}
+        {#            {{ smart_socket.description }}#}
+        {#        </p>#}
+
+        <form class="w-50 p-3 float-left">
+            <fieldset disabled="disabled">
+                {{ form }}
+            </fieldset>
+            {% csrf_token %}
+            {#            {{ form}}#}
+            {% buttons %}
+                <button class="btn btn-sm btn-light btn-outline-secondary">Edit</button>
+                <button class="btn btn-sm btn-light btn-outline-secondary">Delete</button>
+            {% endbuttons %}
+        </form>
+
+    {% else %}
+        <div class="m-2">
+            <p class="w-50 p-3 float-left display-4">
+                Easy way to automate your home with smart sockets.
+            </p>
+        </div>
+    {% endif %}
+    <div class="m-2">
+        <img src="../../static/images/energy-3036156_1920.jpg" alt="Socket"
+             class="w-50 p-3 img-fluid.max-width:50% img-fluid rounded float-left">
+    </div>
+{% endblock %}
+

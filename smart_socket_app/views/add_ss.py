@@ -14,11 +14,12 @@ def add_ss(request):
     else:
         ss_form = SmartSocketForm(request.POST)
         if ss_form.is_valid():
-            # ss_address = request.user.id + request.name
+            ss_form = ss_form.save(commit=False)
+            ss_form.owner = request.user
+            ss_form.unique_address = 'ss_form.owner.id' + ' ' + 'ss_form.name'
             ss_form.save()
             return redirect('index')
         context = {
             'ss_form': ss_form,
-            # 'user': User(),
         }
         return render(request, 'add_ss.html', context)
