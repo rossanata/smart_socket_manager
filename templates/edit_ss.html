@@ -3,13 +3,14 @@
     {% load bootstrap4 %}
     {% if user.is_authenticated %}
 
-        <form class="container w-50 p-3 float-left">
-            <fieldset disabled="disabled">
+        <form method="POST" action="{% url 'edit ss' smart_socket.id %}" class="container w-50 p-3 float-left">
+            <fieldset>
                 <table class="table table-lg table-borderless">
                     <tbody>
                     <tr>
                         <td>{{ form.name.label }}</td>
                         <td>{{ form.name }}</td>
+                        <td>{{ form.name.errors }}</td>
                     </tr>
                     <tr>
                         <td>{{ form.description.label }}</td>
@@ -20,8 +21,11 @@
                 </table>
             </fieldset>
             {% csrf_token %}
-            <a href="{% url 'edit ss' smart_socket.id %}" class="btn btn-sm btn-light btn-outline-secondary">Edit</a>
-            <a href="{% url 'delete ss' 'delete' smart_socket.id %}" class="btn btn-sm btn-light btn-outline-secondary">Delete</a>
+            {% buttons %}
+                <button type="submit" class="btn btn-sm btn-light btn-outline-secondary">Save</button>
+                <a href="{% url 'delete ss' 'delete' smart_socket.id %}" class="btn btn-sm btn-light
+                btn-outline-secondary">Delete</a>
+            {% endbuttons %}
         </form>
 
     {% else %}

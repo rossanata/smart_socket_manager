@@ -2,44 +2,76 @@
 {% block site_content %}
     <script src="https://kit.fontawesome.com/c2c6b51692.js" crossorigin="anonymous"></script>
     {% load bootstrap4 %}
-    {% if user.is_authenticated %}
-        {% if owner_sockets %}
-            <div class="w-50 p-3 float-left ">
-                {% for socket in owner_sockets %}
-                    <ul style=" list-style: none;">
-                        <li>
-                            <i class="fas fa-plug mr-1 text-dark"></i>
-                            <a href="{% url 'ss description' socket.id %}" class="text-dark">
-                                {{ socket.name }}</a>
-                            {% buttons %}
-                                <a href="{% url 'cmd' socket.name 'on' %}"
-                                class="btn btn-sm btn-light btn-outline-secondary ml-4"
-                                        class="text-dark">On</a>
-                                <a href="{% url 'cmd' socket.name 'off' %}"
-                                class="btn btn-sm btn-light btn-outline-secondary"
-                                        class="text-dark">Off</a>
-                            {% endbuttons %}
-                        </li>
-                    </ul>
-                {% endfor %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                {% if user.is_authenticated %}
+                    {% if owner_sockets %}
+                        <a href="{% url "set up instructions" %}" class="text-secondary float-right pt-3">* Set up
+                            instructions </a>
+                        <div class=" w-50 p-3 float-left ">
+                            {% for socket in sockets.object_list %}
+                                <ul style=" list-style: none;">
+                                    <li>
+                                        <i class="fas fa-plug mr-1 text-dark"></i>
+                                        <a href="{% url 'ss description' socket.id %}" class="text-dark">
+                                            {{ socket.name }}</a>
+                                        {% buttons %}
+                                            <a href="{% url 'cmd' socket.name 'ON' %}?page=2"
+                                               class="btn btn-sm btn-light btn-outline-secondary ml-4
+                                                               text-dark">On</a>
+                                            <a href="{% url 'cmd' socket.name 'OFF' %}"
+                                               class="btn btn-sm btn-light btn-outline-secondary
+                                                               text-dark">Off</a>
+                                        {% endbuttons %}
+                                    </li>
+                                </ul>
+                            {% endfor %}
+                            {% if sockets.has_other_pages %}
+                                <ul class="pagination">
+                                    {% if sockets.has_previous %}
+                                        <li><a href="?page={{ sockets.previous_page_number }}">&laquo;</a></li>
+                                    {% else %}
+                                        <li class="disabled"><span>&laquo;</span></li>
+                                    {% endif %}
+                                    {% for i in sockets.paginator.page_range %}
+                                        {% if sockets.number == i %}
+                                            <li class="active"><span>{{ i }} <span
+                                                    class="sr-only">(current)</span></span></li>
+                                        {% else %}
+                                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if sockets.has_next %}
+                                        <li><a href="?page={{ sockets.next_page_number }}">&raquo;</a></li>
+                                    {% else %}
+                                        <li class="disabled"><span>&raquo;</span></li>
+                                    {% endif %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <div class="m-2">
+                            <p class="p-3 float-left display-4">
+                                Add your smart sockets <a href="{% url 'add smart socket' %}" class="text-secondary">here</a>.
+                            </p>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="m-2">
+                        <p class="p-3 float-left display-4">
+                            Easy way to automate your home with smart sockets.
+                        </p>
+                    </div>
+                {% endif %}
             </div>
-        {% else %}
-            <div class="m-2">
-                <p class="w-50 p-3 float-left display-4">
-                    Add your smart sockets <a href="{% url 'add smart socket' %}" class="text-secondary">here</a>.
-                </p>
+
+            <div class="col-lg-6">
+                {#    <div class="m-2">#}
+                <img src="../static/images/energy-3036156_1920.jpg" alt="Socket"
+                     class="w-100 p-3">
             </div>
-        {% endif %}
-    {% else %}
-        <div class="m-2">
-            <p class="w-50 p-3 float-left display-4">
-                Easy way to automate your home with smart sockets.
-            </p>
         </div>
-    {% endif %}
-    <div class="m-2">
-        <img src="../static/images/energy-3036156_1920.jpg" alt="Socket"
-             class="w-50 p-3 img-fluid.max-width:50% img-fluid rounded float-left">
     </div>
 {% endblock %}
 
