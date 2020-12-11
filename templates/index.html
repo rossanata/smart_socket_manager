@@ -6,10 +6,18 @@
         <div class="row">
             <div class="col-lg-6">
                 {% if user.is_authenticated %}
-                    {% if owner_sockets %}
-                        <a href="{% url "set up instructions" %}" class="text-secondary float-right pt-3">* Set up
+                    {% if owner_has_sockets %}
+                        <a href="{% url "set up instructions" %}" class="float-right pt-3">* Set up
                             instructions </a>
-                        <div class=" w-50 p-3 float-left ">
+
+                        <form method="get" class="mt-3" action="{% url 'index' %}">
+                            {{ form }}
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-light btn-outline-secondary ml-2">
+                                Search</button>
+                        </form>
+
+                        <div class=" w-50 float-left p-4">
                             {% for socket in sockets.object_list %}
                                 <ul style=" list-style: none;">
                                     <li>
@@ -17,10 +25,10 @@
                                         <a href="{% url 'ss description' socket.id %}" class="text-dark">
                                             {{ socket.name }}</a>
                                         {% buttons %}
-                                            <a href="{% url 'cmd' socket.name 'ON' %}?page=2"
+                                            <a href="{% url 'cmd' socket.name 'ON' %}?page={{ sockets.number }}"
                                                class="btn btn-sm btn-light btn-outline-secondary ml-4
                                                                text-dark">On</a>
-                                            <a href="{% url 'cmd' socket.name 'OFF' %}"
+                                            <a href="{% url 'cmd' socket.name 'OFF' %}?page={{ sockets.number }}"
                                                class="btn btn-sm btn-light btn-outline-secondary
                                                                text-dark">Off</a>
                                         {% endbuttons %}
@@ -30,20 +38,20 @@
                             {% if sockets.has_other_pages %}
                                 <ul class="pagination">
                                     {% if sockets.has_previous %}
-                                        <li><a href="?page={{ sockets.previous_page_number }}">&laquo;</a></li>
+                                        <li><a href="?page={{ sockets.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">&laquo;</a></li>
                                     {% else %}
-                                        <li class="disabled"><span>&laquo;</span></li>
+                                        <li class='disabled'><span>&laquo;</span></li>
                                     {% endif %}
                                     {% for i in sockets.paginator.page_range %}
                                         {% if sockets.number == i %}
-                                            <li class="active"><span>{{ i }} <span
-                                                    class="sr-only">(current)</span></span></li>
+                                            <li class='active'><span>{{ i }} <span
+                                                    class='sr-only'>(current)</span></span></li>
                                         {% else %}
-                                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                            <li><a href="?page={{ i }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">{{ i }}</a></li>
                                         {% endif %}
                                     {% endfor %}
                                     {% if sockets.has_next %}
-                                        <li><a href="?page={{ sockets.next_page_number }}">&raquo;</a></li>
+                                        <li><a href="?page={{ sockets.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}">&raquo;</a></li>
                                     {% else %}
                                         <li class="disabled"><span>&raquo;</span></li>
                                     {% endif %}
@@ -67,7 +75,6 @@
             </div>
 
             <div class="col-lg-6">
-                {#    <div class="m-2">#}
                 <img src="../static/images/energy-3036156_1920.jpg" alt="Socket"
                      class="w-100 p-3">
             </div>

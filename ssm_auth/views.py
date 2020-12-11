@@ -1,8 +1,9 @@
+# from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.db import transaction
 from django.shortcuts import render, redirect
-
 from ssm_auth.forms import RegisterUserForm, LogInForm, ProfileForm
 
 
@@ -34,6 +35,7 @@ def register_user(request):
 
 
 def login_user(request):
+    errors = ''
     if request.method == 'GET':
         context = {
             'login_form': LogInForm(),
@@ -49,9 +51,11 @@ def login_user(request):
             if user:
                 login(request, user)
                 return redirect('index')
-
+            else:
+                errors = "* username or password not valid"
         context = {
             'login_form': login_form,
+            'errors': errors,
         }
         return render(request, 'auth/log_in.html', context)
 
@@ -60,3 +64,34 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('index')
+
+
+@login_required
+def edit_delete_user(request, pk, action=""):
+    current_user = User.objects.get(pk=pk)
+    if current_user != request.user:
+        return redirect('index')
+    if request.method == 'GET':
+        if action == 'delete':
+            current_user.delete()
+            return redirect('index')
+        context = {
+            'current_user': current_user,
+            'user_form': RegisterUserForm(instance=current_user)
+        }
+        return render(request, 'auth/edit_user.html', context)
+
+    else:
+        form = RegisterUserForm(request.POST, request.FILES, instance=current_user)
+        if form.is_valid():
+            form.save()
+            login(request, current_user)
+            return redirect('index')
+
+        context = {
+            'current_user': current_user,
+            'form': form,
+        }
+    return render(request, 'auth/edit_user.html', context)
+
+

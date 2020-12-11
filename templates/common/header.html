@@ -1,7 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-<svg width="2em" height="2em" viewBox="0 0 16 16" class="mr-2 bi bi-plug-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd" d="M6 0a.5.5 0 0 1 .5.5V3h3V.5a.5.5 0 0 1 1 0V3h1a.5.5 0 0 1 .5.5v3A3.5 3.5 0 0 1 8.5 10c-.002.434-.01.845-.04 1.22-.041.514-.126 1.003-.317 1.424a2.083 2.083 0 0 1-.97 1.028C6.725 13.9 6.169 14 5.5 14c-.998 0-1.61.33-1.974.718A1.922 1.922 0 0 0 3 16H2c0-.616.232-1.367.797-1.968C3.374 13.42 4.261 13 5.5 13c.581 0 .962-.088 1.218-.219.241-.123.4-.3.514-.55.121-.266.193-.621.23-1.09.027-.34.035-.718.037-1.141A3.5 3.5 0 0 1 4 6.5v-3a.5.5 0 0 1 .5-.5h1V.5A.5.5 0 0 1 6 0z"/>
-</svg>
+    <svg width="2em" height="2em" viewBox="0 0 16 16" class="mr-2 bi bi-plug-fill" fill="currentColor"
+         xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+              d="M6 0a.5.5 0 0 1 .5.5V3h3V.5a.5.5 0 0 1 1 0V3h1a.5.5 0 0 1 .5.5v3A3.5 3.5 0 0 1 8.5 10c-.002.434-.01.845-.04 1.22-.041.514-.126 1.003-.317 1.424a2.083 2.083 0 0 1-.97 1.028C6.725 13.9 6.169 14 5.5 14c-.998 0-1.61.33-1.974.718A1.922 1.922 0 0 0 3 16H2c0-.616.232-1.367.797-1.968C3.374 13.42 4.261 13 5.5 13c.581 0 .962-.088 1.218-.219.241-.123.4-.3.514-.55.121-.266.193-.621.23-1.09.027-.34.035-.718.037-1.141A3.5 3.5 0 0 1 4 6.5v-3a.5.5 0 0 1 .5-.5h1V.5A.5.5 0 0 1 6 0z"/>
+    </svg>
     <a class="navbar-brand text-secondary" href="{% url 'index' %}">Smart Socket Manager</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,35 +13,40 @@
         <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'index' %}">Smart Socket List <span
+                    <a class="nav-link ml-2" href="{% url 'set up instructions' %}">Set Up Instructions</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'edit user' user.id %}" class="nav-link"
+                       role="button">Edit Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact us' %}">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-sm btn-outline-secondary mt-1" href="{% url 'index' %}">Smart Socket List <span
                             class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'add smart socket' %}" class="btn btn-sm btn-outline-secondary ml-2 mt-1"
+                       role="button">Add Smart Socket</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'logout user' %}" class="btn btn-sm btn-outline-secondary ml-2 mt-1"
+                       role="button">Log out, {{ user.username }}</a>
                 </li>
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
                 </li>
-            {% endif %}
-            <li class="nav-item">
-                <a class="nav-link ml-2" href="{% url 'about ss' %}">About Smart Sockets</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link ml-2" href="{% url 'set up instructions' %}">Set Up Instructions</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'contact us' %}">Contact Us</a>
-            </li>
-            {% if user.is_authenticated %}
-
                 <li class="nav-item">
-                    <a href="{% url 'add smart socket' %}" class="btn btn-sm btn-outline-secondary ml-2 mt-1"
-                       role="button">Add Smart Socket</a>
+                    <a class="nav-link ml-2" href="{% url 'about ss' %}">About Smart Sockets</a>
                 </li>
-
                 <li class="nav-item">
-                    <a href="{% url 'logout user' %}" class="btn btn-sm btn-outline-secondary ml-2 mt-1"
-                       role="button">Log out, {{ user.first_name }}</a>
+                    <a class="nav-link ml-2" href="{% url 'set up instructions' %}">Set Up Instructions</a>
                 </li>
-            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact us' %}">Contact Us</a>
+                </li>
                 <li class="nav-item">
                     <a href="{% url 'login user' %}" class="btn btn-sm btn-outline-secondary ml-3 mt-1" role="button">Log
                         In</a>
@@ -49,7 +56,6 @@
                        role="button">Register</a>
                 </li>
             {% endif %}
-
         </ul>
 
     </div>

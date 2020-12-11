@@ -11,3 +11,10 @@ class SmartSocketForm(forms.ModelForm):
         widgets = {
           'description': Textarea(attrs={'rows': 5, 'cols': 20}),
         }
+
+
+class FilterForm(forms.Form):
+    search = forms.CharField(
+        required=False, label=''
+    )
+

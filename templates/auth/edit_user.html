@@ -5,10 +5,10 @@
         <div class="row">
             <div class="col-lg-6">
                 <p class="display-4  pl-3 pt-1">
-                    Register.
+                    Profile.
                 </p>
                 <div class="pl-4 form-group form-control-sm w-50">
-                    <form method="POST" action="{% url 'register user' %}" enctype="multipart/form-data">
+                    <form method="POST" action="{% url 'edit user' current_user.id %}" enctype="multipart/form-data">
                         {% csrf_token %}
                         {% for field in user_form %}
                             {% bootstrap_field field %}
@@ -18,15 +18,17 @@
                         {% endfor %}
                         {% buttons %}
                             <button type="submit" class="btn btn-sm btn-light btn-outline-secondary">
-                                Submit</button>
-                            <p>or <a class="text-muted mb-5 pb-5" href="{% url 'login user' %}">login</a></p>
-                            <br><br><br>
+                                Save
+                            </button>
+                            <a href="{% url 'delete user' 'delete' current_user.id %}" class="btn btn-sm btn-light
+                            btn-outline-secondary">Delete</a>
+                            <br><br><br><br><br>
                         {% endbuttons %}
                     </form>
                 </div>
             </div>
             <div class="col-lg-6">
-                <img src="../../static/images/energy-3036156_1920.jpg" alt="Smart Socket"
+                <img src="../../../static/images/energy-3036156_1920.jpg" alt="Smart Socket"
                      class="w-100 p-3">
             </div>
         </div>

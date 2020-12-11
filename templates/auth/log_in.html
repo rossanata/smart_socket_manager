@@ -13,6 +13,9 @@
                         {% for field in login_form %}
                             {% bootstrap_field field %}
                         {% endfor %}
+                        {% if errors %}
+                            <p class="text-danger">{{ errors }}</p>
+                        {% endif %}
                         {% buttons %}
                             <button type="submit" class="btn btn-sm btn-light btn-outline-secondary">Submit</button>
                             <p>or <a class="text-muted" href="{% url 'register user' %}">register</a></p>
