@@ -16,7 +16,7 @@ def add_ss(request):
         if ss_form.is_valid():
             ss_form = ss_form.save(commit=False)
             ss_form.owner = request.user
-            ss_form.unique_address = 'ss_form.owner.id' + ' ' + 'ss_form.name'
+            ss_form.unique_address = request.user.username + '/' + ss_form.name
             ss_form.save()
             return redirect('index')
         context = {
