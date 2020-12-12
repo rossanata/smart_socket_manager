@@ -28,8 +28,8 @@ def register_user(request):
             login(request, user)
             return redirect('index')
         context = {
-            'user_form': RegisterUserForm(),
-            'profile_form': ProfileForm(),
+            'user_form': user_form,
+            'profile_form': profile_form,
         }
         return render(request, 'auth/register_user.html', context)
 
